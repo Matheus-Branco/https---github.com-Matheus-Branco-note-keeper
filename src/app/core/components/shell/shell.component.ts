@@ -8,7 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-shell',
@@ -24,6 +24,7 @@ import { RouterOutlet } from '@angular/router';
     AsyncPipe,
     NgIf,
     RouterOutlet,
+    RouterLink
   ]
 })
 export class ShellComponent {
@@ -32,7 +33,7 @@ export class ShellComponent {
   constructor(private breakpointObserver: BreakpointObserver){
     this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
-      map(result => result.matches),
+      map((result) => result.matches),
       shareReplay()
     );
   }
