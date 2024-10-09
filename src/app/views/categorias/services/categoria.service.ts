@@ -4,6 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import {
   CadastroCategoria,
   CategoriaCriada,
+  CategoriaEditada,
+  CategoriaExcluida,
+  DetalhesCategoria,
+  EdicaoCategoria,
   ListagemCategoria,
 } from '../models/categoria.models';
 import { Observable } from 'rxjs';
@@ -20,7 +24,28 @@ export class CategoriaService {
     return this.http.post<CategoriaCriada>(this.url, novaCategoria);
   }
 
+  editar(
+    id: number,
+    categoriaEditada: EdicaoCategoria
+  ): Observable<CategoriaEditada> {
+    const urlCompleto = `${this.url}/${id}`;
+
+    return this.http.put<CategoriaEditada>(urlCompleto, categoriaEditada);
+  }
+
+  excluir(id: number): Observable<CategoriaExcluida>{
+    const urlCompleto = `${this.url}/${id}`;
+
+    return this.http.delete<CategoriaExcluida>(urlCompleto);
+  }
+
   selecionarTodos(): Observable<ListagemCategoria[]> {
     return this.http.get<ListagemCategoria[]>(this.url);
+  }
+
+  selecionarPorId(id: number) {
+    const urlCompleto = `${this.url}/${id}`
+
+    return this.http.get<DetalhesCategoria>(urlCompleto);
   }
 }
