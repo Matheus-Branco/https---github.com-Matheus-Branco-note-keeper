@@ -10,4 +10,5 @@ export const notasRoutes: Routes = [
   },
   { path: 'listar', component: ListagemNotasComponent },
   { path: 'cadastrar', component: CadastroNotaComponent },
+  { path: 'editar/:id',}
 ];
