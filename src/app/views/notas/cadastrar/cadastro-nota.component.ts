@@ -6,7 +6,12 @@ import {
   NgSwitchCase,
 } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,7 +25,6 @@ import { MatCardModule } from '@angular/material/card';
 import { NotaService } from '../services/nota.service';
 import { CadastroNota } from '../models/nota.models';
 import { NoticacaoService } from '../../../core/notificacao/notificacao.service';
-
 @Component({
   selector: 'app-cadastro-nota',
   standalone: true,
