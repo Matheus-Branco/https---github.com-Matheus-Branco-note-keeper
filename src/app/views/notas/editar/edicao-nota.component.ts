@@ -9,10 +9,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NotaService } from '../services/nota.service';
-import { CadastroNota, DetalhesNota, EdicaoNota } from '../models/nota.models';
+import { CadastroNota, DetalhesNota } from '../models/nota.models';
 import { CategoriaService } from '../../categorias/services/categoria.service';
 import { ListagemCategoria } from '../../categorias/models/categoria.models';
 import { Observable } from 'rxjs';
+import { NoticacaoService } from '../../../core/notificacao/notificacao.service';
 
 @Component({
   selector: 'app-edicao-nota',
@@ -44,7 +45,8 @@ export class EditarComponent implements OnInit{
     private route: ActivatedRoute,
     private router: Router,
     private notaService: NotaService,
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+    private notificacao: NoticacaoService,
   ) {
     this.notaForm = new FormGroup({
       titulo: new FormControl<string>(''),
@@ -52,12 +54,24 @@ export class EditarComponent implements OnInit{
       categoriaId: new FormControl<number>(0),
     });
   }
+
+  get titulo(){
+    return this.notaForm.get('titulo');
+  }
+
+  get conteudo(){
+    return this.notaForm.get('conteudo');
+  }
+
+  get categoriaId(){
+    return this.notaForm.get('categoriaId');
+  }
+
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
 
     if (!this.id) {
-      console.error('Não foi possível recuperar o id requisitado.');
-
+      this.notificacao.erro('Não foi possível recuperar o id requisitado!');
       return;
     }
 
@@ -68,9 +82,9 @@ export class EditarComponent implements OnInit{
     this.categorias$ = this.categoriaService.selecionarTodos();
   }
 
-  editar() {
+  editar(): void {
   if(!this.id){
-    console.error('Não possível recuperar o id requisitado.');
+    this.notificacao.erro('Não foi possível recuperar o id requisitado!');
 
     return;
   }
@@ -78,7 +92,9 @@ export class EditarComponent implements OnInit{
     const notaEditada: CadastroNota = this.notaForm.value;
 
     this.notaService.editar(this.id ,notaEditada).subscribe((res) => {
-      console.log(`O registro ID [${res.id}] foi editado com sucesso!`);
+      this.notificacao.sucesso(
+        `O registro ID [${res.id}] foi editado com sucesso`
+      );
 
       this.router.navigate(['/notas']);
     });
