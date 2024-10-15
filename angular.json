@@ -119,6 +119,13 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref": "https://Matheus_Branco.github.io/note-keeper/",
+            "repo": "https://github.com/Matheus-Branco/note-keeper.git"
+          }
         }
       }
     }
